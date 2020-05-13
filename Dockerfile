@@ -1,15 +1,35 @@
-FROM docker:latest
+FROM node:13-alpine
 
-RUN apk update
-RUN apk upgrade
-RUN apk add --update nodejs-current nodejs-npm zip unzip wget yarn
-RUN apk add --no-cache python py-pip git
-RUN apk add --no-cache build-base g++ cairo-dev jpeg-dev pango-dev freetype-dev giflib-dev
-RUN pip install --upgrade pip
-RUN pip install --upgrade awscli
+RUN apk update && apk upgrade && \
+    apk --no-cache --virtual build-dependencies add \
+    git \
+    zip \
+    unzip \
+    wget \
+    yarn \
+    curl \
+    bash \
+    g++ \
+    build-base \
+    docker \
+    py-pip \
+    python3-dev \
+    libffi-dev \
+    openssl-dev \
+    gcc \
+    libc-dev \
+    make && \
+    rm -rf /var/cache/apk/*
 
-#Install Terraform Version 0.12.23
-RUN wget --quiet https://releases.hashicorp.com/terraform/0.12.23/terraform_0.12.23_linux_amd64.zip \
-  && unzip terraform_0.12.23_linux_amd64.zip \
+RUN pip3 install --upgrade pip  --no-cache-dir
+RUN pip3 install --upgrade awscli  --no-cache-dir
+RUN pip3 install docker-compose --no-cache-dir
+
+# Declare constants
+ENV TERRAFORM_VERSION 0.12.24
+
+#Install Terraform
+RUN wget --quiet https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
+  && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
   && mv terraform /usr/bin \
-  && rm terraform_0.12.23_linux_amd64.zip
+  && rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
