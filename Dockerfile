@@ -26,7 +26,7 @@ RUN pip3 install --upgrade awscli  --no-cache-dir
 RUN pip3 install docker-compose --no-cache-dir
 
 # Declare constants
-ENV TERRAFORM_VERSION 0.12.26
+ENV TERRAFORM_VERSION 0.13.0
 
 #Install Terraform
 RUN wget --quiet https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
