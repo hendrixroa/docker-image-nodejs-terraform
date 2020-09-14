@@ -1,4 +1,4 @@
-FROM node:13-alpine
+FROM node:14-alpine
 
 RUN apk update && apk upgrade && \
     apk --no-cache --virtual build-dependencies add \
@@ -26,7 +26,7 @@ RUN pip3 install --upgrade awscli  --no-cache-dir
 RUN pip3 install docker-compose --no-cache-dir
 
 # Declare constants
-ENV TERRAFORM_VERSION 0.13.0
+ENV TERRAFORM_VERSION 0.13.2
 
 #Install Terraform
 RUN wget --quiet https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
