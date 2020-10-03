@@ -12,6 +12,8 @@ RUN apk update && apk upgrade && \
     g++ \
     build-base \
     docker \
+    docker-cli \
+    openrc \
     py-pip \
     python3-dev \
     libffi-dev \
@@ -20,6 +22,8 @@ RUN apk update && apk upgrade && \
     libc-dev \
     make && \
     rm -rf /var/cache/apk/*
+    
+RUN rc-update add docker boot
 
 RUN pip3 install --upgrade pip  --no-cache-dir
 RUN pip3 install --upgrade awscli  --no-cache-dir
